@@ -31,15 +31,14 @@ Tarımsal verimliliği artırmak ve yanlış arazi kullanımının önüne geçm
 ## 🗄️ Sistem ve Veri Akış Şeması
 
 ```text
-[Kullanıcı / Kamera] ──> Toprak Fotoğrafı ──> CNN (MobileNetV2) ──> Toprak Türü ──┐
-                                                                                  │
-[GPS / Konum] ──────────> OpenWeather API ──> Sıcaklık & Nem ─────┐               │
-                                                                  ├──> [Random Forest / ANN] ──> Hibrit Karar Katmanı
-[Sensör / Manuel Giriş] ─> N-P-K & pH Değerleri ──────────────────┘                            (MainActivity.java)
-                                                                                                        │
-                                                                                                        ├── % Uyum Skoru
-                                                                                                        ├── Ürün Tavsiyesi
-                                                                                                        └── Uygunluk Uyarısı
+[Kamera] ──────> Toprak Fotoğrafı ──> CNN (MobileNetV2) ─> Toprak Türü ──┐
+                                                                          │
+[GPS/Konum] ───> OpenWeather API ───> Sıcaklık & Nem ────┐               ├──> [Hibrit Karar Katmanı] ──> Sonuç & Öneri
+                                                         ├──> [RF / ANN] ─┘    (MainActivity.java)
+[Veri Girişi] ─> N-P-K & pH Değerleri ───────────────────┘
+
+
+
 🚀 Kurulum
 Gereksinimler
 Android Studio (Giraffe veya daha güncel bir sürüm)
@@ -50,14 +49,69 @@ Python 3.9+ (Model geliştirme/eğitim için)
 
 Aktif OpenWeatherMap API Anahtarı
 
-
 1. Repoyu Klonla
+Bash
 git clone <repo-url>
 cd akilli-tarim-mobil
+2. Yapay Zeka Modellerini Derleme (Opsiyonel / Model Geliştirici)
+Modelleri sıfırdan eğitmek ve .tflite formatına dönüştürmek isterseniz:
 
+Bash
+cd ai_models
 
+# Gerekli Python kütüphanelerini kurun
+pip install tensorflow scikit-learn pandas numpy joblib
 
+# CNN ve Random Forest modellerini eğitin
+python train_cnn_model_v2.py
+python hybrid_model_training.py
 
+# Modelleri TFLite formatına çevirin
+python converter.py
+3. Mobil Uygulamayı Başlatma (Android Studio)
+Android Studio'yu açın ve File > Open seçeneğiyle proje kök dizinini seçin.
 
+Gradle senkronizasyonunun (Gradle Sync) tamamlanmasını bekleyin.
 
+OpenWeatherMap API anahtarınızı MainActivity.java veya ilgili yapılandırma dosyasındaki alana girin:
 
+Java
+private static final String API_KEY = "BURAYA_API_KEY_YAZIN";
+.tflite uzantılı model dosyalarının app/src/main/assets/ klasöründe yer aldığından emin olun.
+
+Bir Android emülatör veya fiziksel cihaz bağlayarak Run (Shift + F10) butonuna basın.
+
+📱 Kullanım Akışı
+Toprak Teşhisi: "Fotoğraf Analizi Yap" butonuna tıklayarak toprak fotoğrafı çekin veya galeriden yükleyin (Model toprak tipini Killi/Kumlu/Tınlı olarak belirler).
+
+Çevresel Veriler: "Konumu Kullan" butonuna basarak anlık hava durumu verilerini (Sıcaklık, Nem) otomatik doldurun ya da Azot (N), Fosfor (P), Potasyum (K) ve pH değerlerini manuel girin.
+
+Hibrit Analiz: "Hibrit Analizi Başlat" butonuna tıklayarak hem görsel hem de kimyasal parametrelerin çapraz sorgulanmasını sağlayın.
+
+Sonuç Raporu: Önerilen ürün (Örn: Nohut, Mısır, Karpuz, Kahve), uyumluluk yüzdesi (%) ve varsa tarımsal uyarıları görüntüleyin.
+
+📁 Proje Yapısı
+Plaintext
+akilli-tarim/
+├── android/                        # Android Mobil Uygulama
+│   ├── app/
+│   │   ├── src/
+│   │   │   └── main/
+│   │   │       ├── assets/         # .tflite optimize modelleri
+│   │   │       ├── java/           # Java kaynak kodları (MainActivity, API Client vb.)
+│   │   │       ├── res/            # XML layout'lar ve arayüz bileşenleri
+│   │   │       └── AndroidManifest.xml
+│   │   └── build.gradle.kts
+│   └── build.gradle.kts
+├── ai_models/                      # Yapay Zeka & Model Eğitim Kodları
+│   ├── train_cnn_model_v2.py       # Toprak dokusu teşhisi için MobileNetV2 (CNN) eğitimi
+│   ├── hybrid_model_training.py    # Sayısal veri (N-P-K, pH vb.) ile ürün öneri modeli
+│   ├── converter.py                # Keras/H5 modellerini TFLite formatına çevirici
+│   └── dataset/                    # 2700 satırlık tarımsal eğitim veri seti
+└── README.md
+🔬 Geliştirici Notları
+Model Başarımı: Uygulama, hibrit çıkarım mekanizması ile toprak analizi ve ürün tahmininde yaklaşık %90 doğruluk oranı ile çalışmaktadır.
+
+TFLite Opcode Optimizasyonu: Model mobilleştirilirken eski Android sürümleriyle tam uyumluluk sağlanması amacıyla Opcode sürümleri optimize edilmiştir.
+
+Gerekli İzinler: Uygulamanın tam fonksiyonel çalışabilmesi için cihaz üzerinde CAMERA, ACCESS_FINE_LOCATION ve INTERNET izinlerinin verilmiş olması gereklidir.
