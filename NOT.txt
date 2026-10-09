@@ -1,0 +1,1 @@
+Proje, Android Studio kullanılarak yapılmıştır. Yapımında Java+ Phyton dilleri kullanılmıştır. app klasörünün içinde gerekli java kodları( MainActivity.java / SoilClassifier.java) , aynı şekilde app/src/main/res/layout dizininde activity_main.xml(tasarım dosyaları), yapay zeka modelleri ( assets ) , app/src/main/assets/ dizininde bulunmaktadır. 

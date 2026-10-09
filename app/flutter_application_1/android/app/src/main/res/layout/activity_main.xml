@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDF2F0">
+
+    <!-- Üst Görsel Header (Sabit Başlık Alanı) -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/header_gradient_bg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="24dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Akıllı Tarım ve Ürün Öneri Sistemi"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:lineSpacingExtra="4dp"
+                    android:shadowColor="#40000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yapay Zeka Destekli Hibrit Analiz"
+                    android:textColor="#B2DFDB"
+                    android:textSize="13sp"
+                    android:layout_marginTop="6dp"
+                    android:alpha="0.9" />
+            </LinearLayout>
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-25dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- ADIM 1: KAMERA ANALİZİ -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="8dp"
+                android:layout_marginBottom="20dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. ADIM: TOPRAK TEŞHİSİ"
+                        android:textColor="#2E7D32"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.1" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="16dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="2dp"
+                        app:strokeColor="#F1F8E9">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#F9FBF9">
+
+                            <ImageView
+                                android:id="@+id/soilImageView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop" />
+
+                            <LinearLayout
+                                android:id="@+id/emptyStateHint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_gravity="center"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@android:drawable/ic_menu_camera"
+                                    app:tint="#81C784"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Analiz için dokunun"
+                                    android:textSize="12sp"
+                                    android:textColor="#A5D6A7"
+                                    android:layout_marginTop="8dp"/>
+                            </LinearLayout>
+                        </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCapture"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="16dp"
+                        android:text="FOTOĞRAF ANALİZİ YAP"
+                        android:textColor="#FFFFFF"
+                        app:cornerRadius="18dp"
+                        android:backgroundTint="#2E7D32"
+                        app:icon="@android:drawable/ic_menu_camera"
+                        app:iconPadding="12dp" />
+
+                    <TextView
+                        android:id="@+id/tvSoilResult"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="12dp"
+                        android:text="Durum: Veri Bekleniyor"
+                        android:textColor="#757575"
+                        android:textStyle="italic" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ADIM 2: KİMYASAL VERİLER & KONUM -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="6dp"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2. ADIM: ÇEVRESEL VERİLER"
+                            android:textColor="#2E7D32"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:layout_centerVertical="true" />
+
+                        <!-- KONUMDAN ÇEK BUTONU (Yeni Eklendi) -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnGetWeather"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="KONUMU KULLAN"
+                            android:textColor="#43A047"
+                            android:textSize="11sp"
+                            app:icon="@android:drawable/ic_menu_mylocation"
+                            app:iconSize="14dp"
+                            app:iconTint="#43A047" />
+                    </RelativeLayout>
+
+                    <Spinner
+                        android:id="@+id/soilTypeSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/input_field_bg"
+                        android:paddingStart="12dp"/>
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="2"
+                        android:layout_marginTop="12dp">
+
+                        <EditText android:id="@+id/etN" android:layout_width="0dp" android:layout_columnWeight="1" android:hint="Azot" android:inputType="numberDecimal" android:background="@drawable/input_field_bg" android:layout_margin="4dp" android:padding="14dp"/>
+                        <EditText android:id="@+id/etP" android:layout_width="0dp" android:layout_columnWeight="1" android:hint="Fosfor" android:inputType="numberDecimal" android:background="@drawable/input_field_bg" android:layout_margin="4dp" android:padding="14dp"/>
+                        <EditText android:id="@+id/etK" android:layout_width="0dp" android:layout_columnWeight="1" android:hint="Potasyum" android:inputType="numberDecimal" android:background="@drawable/input_field_bg" android:layout_margin="4dp" android:padding="14dp"/>
+                        <EditText android:id="@+id/etPh" android:layout_width="0dp" android:layout_columnWeight="1" android:hint="pH" android:inputType="numberDecimal" android:background="@drawable/input_field_bg" android:layout_margin="4dp" android:padding="14dp"/>
+                    </GridLayout>
+
+                    <EditText
+                        android:id="@+id/etTemp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Sıcaklık (°C)"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/input_field_bg"
+                        android:layout_margin="4dp"
+                        android:padding="14dp"/>
+
+                    <EditText
+                        android:id="@+id/etHum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nem Oranı (%)"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/input_field_bg"
+                        android:layout_margin="4dp"
+                        android:padding="14dp"/>
+
+                    <EditText
+                        android:id="@+id/etRain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Yıllık Yağış (mm)"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/input_field_bg"
+                        android:layout_margin="4dp"
+                        android:padding="14dp"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ANALİZ BUTONU -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAnalyze"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="HİBRİT ANALİZİ BAŞLAT"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="20dp"
+                android:backgroundTint="#004D40"
+                android:elevation="8dp" />
+
+            <!-- SONUÇ RAPORU -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="28dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="50dp"
+                app:cardBackgroundColor="#F1F8E9"
+                app:strokeWidth="2dp"
+                app:strokeColor="#C8E6C9">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SİSTEM RAPORU"
+                        android:textColor="#388E3C"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.1" />
+
+                    <TextView
+                        android:id="@+id/tvFinalResult"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Analiz sonuçları buraya gelecek..."
+                        android:textColor="#1B5E20"
+                        android:textSize="17sp"
+                        android:lineSpacingExtra="6dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

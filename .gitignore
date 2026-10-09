@@ -1,0 +1,29 @@
+# --- Güvenlik & Gizlilik (API anahtarları ve veritabanı) ---
+**/.env
+**/.env.*
+**/*.sqlite3
+**/*.sqlite
+**/*.db
+**/*.pem
+**/*.key
+
+# --- Bağımlılıklar (Depoyu şişiren devasa klasörler) ---
+**/node_modules/
+**/.venv/
+**/venv/
+**/ENV/
+
+# --- Önbellek & Derleme Çıktıları ---
+**/__pycache__/
+**/*.pyc
+**/build/
+**/dist/
+**/.next/
+**/*.log
+
+# --- Editör & İşletim Sistemi Kalıntıları ---
+**/.vscode/
+**/.idea/
+**/.DS_Store
+**/Thumbs.db
+**/desktop.ini
